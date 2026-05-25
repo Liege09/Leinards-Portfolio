@@ -80,22 +80,24 @@ export default function GalleryPage() {
   const handleImageError = (e, title) => {
     e.target.style.display = "none";
     const parent = e.target.parentElement;
-    parent.style.backgroundColor = "#1a1a2e";
-    parent.style.display = "flex";
-    parent.style.alignItems = "center";
-    parent.style.justifyContent = "center";
-    parent.style.flexDirection = "column";
-    const span = document.createElement("span");
-    span.style.fontSize = "3rem";
-    span.style.color = "white";
-    span.innerHTML = "🖼️";
-    const p = document.createElement("p");
-    p.style.color = "white";
-    p.style.marginTop = "0.5rem";
-    p.innerHTML = title;
-    parent.innerHTML = "";
-    parent.appendChild(span);
-    parent.appendChild(p);
+    if (parent) {
+      parent.style.backgroundColor = "#1a1a2e";
+      parent.style.display = "flex";
+      parent.style.alignItems = "center";
+      parent.style.justifyContent = "center";
+      parent.style.flexDirection = "column";
+      const span = document.createElement("span");
+      span.style.fontSize = "3rem";
+      span.style.color = "white";
+      span.innerHTML = "🖼️";
+      const p = document.createElement("p");
+      p.style.color = "white";
+      p.style.marginTop = "0.5rem";
+      p.innerHTML = title;
+      parent.innerHTML = "";
+      parent.appendChild(span);
+      parent.appendChild(p);
+    }
   };
 
   return (
@@ -104,32 +106,11 @@ export default function GalleryPage() {
         <h1 style={pageTitle}>My Gallery</h1>
         <p style={pageSubtitle}>A glimpse of my work, activities, and interests</p>
         
-        {/* Filter Buttons */}
         <div style={filterContainer}>
-          <button 
-            onClick={() => setFilter("all")} 
-            style={filterButtonStyle}
-          >
-            All
-          </button>
-          <button 
-            onClick={() => setFilter("events")} 
-            style={filterButtonStyle}
-          >
-            Events
-          </button>
-          <button 
-            onClick={() => setFilter("design")} 
-            style={filterButtonStyle}
-          >
-            Design
-          </button>
-          <button 
-            onClick={() => setFilter("development")} 
-            style={filterButtonStyle}
-          >
-            Development
-          </button>
+          <button onClick={() => setFilter("all")} style={filterButtonStyle}>All</button>
+          <button onClick={() => setFilter("events")} style={filterButtonStyle}>Events</button>
+          <button onClick={() => setFilter("design")} style={filterButtonStyle}>Design</button>
+          <button onClick={() => setFilter("development")} style={filterButtonStyle}>Development</button>
         </div>
         
         <div style={galleryGrid}>
@@ -153,7 +134,6 @@ export default function GalleryPage() {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
       {selectedImage && (
         <div style={lightboxOverlay} onClick={closeLightbox}>
           <div style={lightboxContent} onClick={(e) => e.stopPropagation()}>
@@ -183,24 +163,24 @@ const pageTitle = {
   fontSize: "2.5rem",
   color: "#1a1a2e",
   borderBottom: "3px solid #4fc3f7",
-  display: "inline-block" as const,
+  display: "inline-block",
   paddingBottom: "0.5rem",
   marginBottom: "1rem",
 };
 
 const pageSubtitle = {
-  textAlign: "center" as const,
+  textAlign: "center",
   color: "#666",
   marginBottom: "2rem",
   fontSize: "1.1rem",
 };
 
 const filterContainer = {
-  display: "flex" as const,
-  justifyContent: "center" as const,
+  display: "flex",
+  justifyContent: "center",
   gap: "1rem",
   marginBottom: "2rem",
-  flexWrap: "wrap" as const,
+  flexWrap: "wrap",
 };
 
 const filterButtonStyle = {
@@ -215,7 +195,7 @@ const filterButtonStyle = {
 };
 
 const galleryGrid = {
-  display: "grid" as const,
+  display: "grid",
   gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
   gap: "1.5rem",
 };
@@ -223,7 +203,7 @@ const galleryGrid = {
 const galleryCard = {
   backgroundColor: "white",
   borderRadius: "12px",
-  overflow: "hidden" as const,
+  overflow: "hidden",
   boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
   cursor: "pointer",
@@ -232,17 +212,17 @@ const galleryCard = {
 const imageWrapper = {
   width: "100%",
   height: "220px",
-  overflow: "hidden" as const,
+  overflow: "hidden",
   backgroundColor: "#f0f0f0",
-  display: "flex" as const,
-  alignItems: "center" as const,
-  justifyContent: "center" as const,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 const galleryImage = {
   width: "100%",
   height: "100%",
-  objectFit: "cover" as const,
+  objectFit: "cover",
   transition: "transform 0.3s ease",
 };
 
@@ -263,7 +243,7 @@ const cardDescription = {
 };
 
 const categoryBadge = {
-  display: "inline-block" as const,
+  display: "inline-block",
   padding: "0.25rem 0.75rem",
   backgroundColor: "#4fc3f7",
   color: "#1a1a2e",
@@ -273,16 +253,16 @@ const categoryBadge = {
 };
 
 const lightboxOverlay = {
-  position: "fixed" as const,
+  position: "fixed",
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
   backgroundColor: "rgba(0,0,0,0.9)",
   zIndex: 2000,
-  display: "flex" as const,
-  alignItems: "center" as const,
-  justifyContent: "center" as const,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 const lightboxContent = {
@@ -291,12 +271,12 @@ const lightboxContent = {
   backgroundColor: "white",
   borderRadius: "12px",
   padding: "1rem",
-  textAlign: "center" as const,
-  position: "relative" as const,
+  textAlign: "center",
+  position: "relative",
 };
 
 const closeButton = {
-  position: "absolute" as const,
+  position: "absolute",
   top: "10px",
   right: "20px",
   fontSize: "2rem",
@@ -309,7 +289,7 @@ const closeButton = {
 const lightboxImage = {
   maxWidth: "100%",
   maxHeight: "60vh",
-  objectFit: "contain" as const,
+  objectFit: "contain",
 };
 
 const lightboxTitle = {
