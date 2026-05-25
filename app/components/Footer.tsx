@@ -71,7 +71,7 @@ const footerContent = {
 };
 
 const footerSection = {
-  textAlign: "center",
+  textAlign: "center" as const,
 };
 
 const footerTitle = {
@@ -82,7 +82,7 @@ const footerTitle = {
 
 const linkGroup = {
   display: "flex",
-  flexDirection: "column",
+  flexDirection: "column" as const,
   gap: "0.5rem",
 };
 
@@ -93,7 +93,7 @@ const footerLink = {
 };
 
 const copyrightStyle = {
-  textAlign: "center",
+  textAlign: "center" as const,
   padding: "1rem",
   borderTop: "1px solid #333",
   fontSize: "0.9rem",
