@@ -2,11 +2,20 @@
 
 import { useState } from "react";
 
-export default function GalleryPage() {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [filter, setFilter] = useState("all");
+interface GalleryItem {
+  id: number;
+  title: string;
+  description: string;
+  details: string;
+  image: string;
+  category: string;
+}
 
-  const galleryItems = [
+export default function GalleryPage() {
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+  const [filter, setFilter] = useState<string>("all");
+
+  const galleryItems: GalleryItem[] = [
     {
       id: 1,
       title: "Color Fun Run 2024",
@@ -67,9 +76,9 @@ export default function GalleryPage() {
 
   const filteredItems = filter === "all" 
     ? galleryItems 
-    : galleryItems.filter(item => item.category === filter);
+    : galleryItems.filter((item: GalleryItem) => item.category === filter);
 
-  const openLightbox = (image) => {
+  const openLightbox = (image: GalleryItem) => {
     setSelectedImage(image);
   };
 
@@ -77,9 +86,9 @@ export default function GalleryPage() {
     setSelectedImage(null);
   };
 
-  const handleImageError = (e, title) => {
-    e.target.style.display = "none";
-    const parent = e.target.parentElement;
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, title: string) => {
+    e.currentTarget.style.display = "none";
+    const parent = e.currentTarget.parentElement;
     if (parent) {
       parent.style.backgroundColor = "#1a1a2e";
       parent.style.display = "flex";
