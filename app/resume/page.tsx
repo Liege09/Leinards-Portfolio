@@ -70,7 +70,7 @@ const experienceStyle = {
 
 const dateStyle = {
   color: "#666",
-  fontStyle: "italic",
+  fontStyle: "italic" as const,
   marginBottom: "0.5rem",
 };
 

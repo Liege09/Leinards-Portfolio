@@ -50,7 +50,7 @@ const heroContainer = {
 };
 
 const heroContent = {
-  textAlign: "center",
+  textAlign: "center" as const,
   maxWidth: "800px",
   margin: "0 auto",
 };
@@ -59,7 +59,7 @@ const nameStyle = {
   fontSize: "3.5rem",
   marginBottom: "1rem",
   borderBottom: "none",
-  display: "block",
+  display: "block" as const,
   color: "white",
 };
 
@@ -77,18 +77,18 @@ const bioText = {
 };
 
 const buttonGroup = {
-  display: "flex",
+  display: "flex" as const,
   gap: "1rem",
-  justifyContent: "center",
-  flexWrap: "wrap",
+  justifyContent: "center" as const,
+  flexWrap: "wrap" as const,
 };
 
 const primaryButtonStyle = {
-  display: "inline-block",
+  display: "inline-block" as const,
 };
 
 const secondaryButtonStyle = {
-  display: "inline-block",
+  display: "inline-block" as const,
 };
 
 const quickLinksSection = {
@@ -96,7 +96,7 @@ const quickLinksSection = {
 };
 
 const sectionTitle = {
-  textAlign: "center",
+  textAlign: "center" as const,
   marginBottom: "2.5rem",
   color: "#1a1a2e",
 };
@@ -104,7 +104,7 @@ const sectionTitle = {
 const cardLinkStyle = {
   color: "#4fc3f7",
   textDecoration: "none",
-  fontWeight: "bold",
-  display: "inline-block",
+  fontWeight: "bold" as const,
+  display: "inline-block" as const,
   marginTop: "1rem",
 };

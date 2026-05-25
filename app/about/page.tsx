@@ -39,10 +39,10 @@ const contentStyle = {
 };
 
 const profileContainer = {
-  display: "flex",
+  display: "flex" as const,
   gap: "2rem",
   flexWrap: "wrap" as const,
-  alignItems: "flex-start",
+  alignItems: "flex-start" as const,
 };
 
 const profileImageStyle = {
