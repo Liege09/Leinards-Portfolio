@@ -88,7 +88,7 @@ const containerStyle = {
 };
 
 const subtitleStyle = {
-  textAlign: "center",
+  textAlign: "center" as const,
   color: "#666",
   marginBottom: "2rem",
 };
@@ -116,9 +116,9 @@ const inputGroupStyle = {
 };
 
 const labelStyle = {
-  display: "block",
+  display: "block" as const,
   marginBottom: "0.5rem",
-  fontWeight: "bold",
+  fontWeight: "bold" as const,
 };
 
 const inputStyle = {
