@@ -1,14 +1,14 @@
+"use client";
+
 function AboutPage() {
   return (
     <div style={containerStyle}>
       <h1>About Me Page</h1>
       <div style={contentStyle}>
         <div style={profileContainer}>
-          <img 
-            src="/images/My Picture.png" 
-            alt="Leinard Aro"
-            style={profileImageStyle}
-          />
+          <div style={placeholderImageStyle}>
+            <span style={placeholderIcon}>👤</span>
+          </div>
           <div style={bioStyle}>
             <h2>Who Am I?</h2>
             <p>I'm Leinard Aro, an Information Technology student from Laguna, Philippines.</p>
@@ -45,11 +45,19 @@ const profileContainer = {
   alignItems: "flex-start" as const,
 };
 
-const profileImageStyle = {
+const placeholderImageStyle = {
   width: "200px",
   height: "200px",
   borderRadius: "50%",
-  objectFit: "cover" as const,
+  backgroundColor: "#1a1a2e",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
+const placeholderIcon = {
+  fontSize: "4rem",
+  color: "#4fc3f7",
 };
 
 const bioStyle = {

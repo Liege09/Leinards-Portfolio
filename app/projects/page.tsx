@@ -12,7 +12,7 @@ export default function ProjectsPage() {
       description: "This personal portfolio website built with Next.js to showcase my skills and projects.",
       tech: ["Next.js", "React", "TypeScript"],
       category: "web",
-      image: "/images/My Portfolio.png"
+      image: null
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ export default function ProjectsPage() {
       description: "An e-commerce website built with PHP and MySQLi for online shopping functionality.",
       tech: ["PHP", "MySQLi", "HTML/CSS"],
       category: "web",
-      image: "/images/ARO E-Commerce.png"
+      image: null
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ export default function ProjectsPage() {
       description: "Custom sticker and decal design using Silhouette Studio and SVG editing.",
       tech: ["Silhouette Studio", "SVG", "Design"],
       category: "design",
-      image: "/images/Custom Decal Design.png"
+      image: null
     },
   ];
 
@@ -36,26 +36,11 @@ export default function ProjectsPage() {
     ? projects 
     : projects.filter(p => p.category === filter);
 
-  const handleImageError = (e, title) => {
-    e.target.style.display = "none";
-    const parent = e.target.parentElement;
-    parent.style.backgroundColor = "#1a1a2e";
-    parent.style.display = "flex";
-    parent.style.alignItems = "center";
-    parent.style.justifyContent = "center";
-    parent.style.minHeight = "180px";
-    const span = document.createElement("span");
-    span.style.fontSize = "3rem";
-    span.style.color = "white";
-    span.innerHTML = "🖼️";
-    const p = document.createElement("p");
-    p.style.color = "white";
-    p.style.marginTop = "0.5rem";
-    p.style.fontSize = "0.8rem";
-    p.innerHTML = title;
-    parent.innerHTML = "";
-    parent.appendChild(span);
-    parent.appendChild(p);
+  const getProjectIcon = (title: string) => {
+    if (title.includes("Portfolio")) return "💼";
+    if (title.includes("E-Commerce")) return "🛒";
+    if (title.includes("Decal")) return "🎨";
+    return "📁";
   };
 
   return (
@@ -63,7 +48,6 @@ export default function ProjectsPage() {
       <h1>My Projects</h1>
       <p style={subtitleStyle}>Here are some of my recent works</p>
       
-      {/* Filter Buttons */}
       <div style={filterContainer}>
         <button onClick={() => setFilter("all")} style={filterButton(filter === "all")}>All</button>
         <button onClick={() => setFilter("web")} style={filterButton(filter === "web")}>Web Development</button>
@@ -73,16 +57,12 @@ export default function ProjectsPage() {
       <div className="grid-2">
         {filteredProjects.map((project) => (
           <div key={project.id} className="card" style={projectCardStyle}>
-            {project.image && (
-              <div style={imageWrapperStyle}>
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  style={projectImageStyle}
-                  onError={(e) => handleImageError(e, project.title)}
-                />
+            <div style={imageWrapperStyle}>
+              <div style={projectPlaceholder}>
+                <span style={projectIcon}>{getProjectIcon(project.title)}</span>
+                <p style={projectPlaceholderText}>{project.title}</p>
               </div>
-            )}
+            </div>
             <h2>{project.title}</h2>
             <p>{project.description}</p>
             <div style={techStackStyle}>
@@ -140,7 +120,7 @@ const imageWrapperStyle = {
   width: "100%",
   height: "180px",
   overflow: "hidden",
-  backgroundColor: "#f0f0f0",
+  backgroundColor: "#1a1a2e",
   borderRadius: "8px",
   marginBottom: "1rem",
   display: "flex",
@@ -148,11 +128,24 @@ const imageWrapperStyle = {
   justifyContent: "center",
 };
 
-const projectImageStyle = {
+const projectPlaceholder = {
+  display: "flex",
+  flexDirection: "column" as const,
+  alignItems: "center",
+  justifyContent: "center",
   width: "100%",
   height: "100%",
-  objectFit: "cover" as const,
-  borderRadius: "8px",
+};
+
+const projectIcon = {
+  fontSize: "3rem",
+  color: "#4fc3f7",
+};
+
+const projectPlaceholderText = {
+  color: "white",
+  marginTop: "0.5rem",
+  fontSize: "0.8rem",
 };
 
 const techStackStyle = {

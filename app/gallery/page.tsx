@@ -2,26 +2,17 @@
 
 import { useState } from "react";
 
-interface GalleryItem {
-  id: number;
-  title: string;
-  description: string;
-  details: string;
-  image: string;
-  category: string;
-}
-
 export default function GalleryPage() {
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  const [filter, setFilter] = useState<string>("all");
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [filter, setFilter] = useState("all");
 
-  const galleryItems: GalleryItem[] = [
+  const galleryItems = [
     {
       id: 1,
       title: "Color Fun Run 2024",
       description: "Takbo para sa Atelang Ka-Piyu - May 5, 2024",
       details: "Organized by: Piyu Sports Club | LSPU Office of Sports and Cultural Affairs",
-      image: "/images/2024 Color Fun Run.jpg",
+      image: null,
       category: "events"
     },
     {
@@ -29,7 +20,7 @@ export default function GalleryPage() {
       title: "Tree Planting Activity",
       description: "Environmental initiative with HPKL nonprofit organization",
       details: "Secretary, Nonprofit Tree Planting Organization",
-      image: "/images/HPKL Tree Planting.jpg",
+      image: null,
       category: "events"
     },
     {
@@ -37,7 +28,7 @@ export default function GalleryPage() {
       title: "Custom Decal Design",
       description: "Sample of decal and sticker design work",
       details: "Silhouette Studio | SVG Editing",
-      image: "/images/Custom Decal Design.png",
+      image: null,
       category: "design"
     },
     {
@@ -45,7 +36,7 @@ export default function GalleryPage() {
       title: "Sticker Production",
       description: "Vinyl cutting, weeding, and sticker production process",
       details: "Full production workflow",
-      image: "/images/Sticky Production.jpg",
+      image: null,
       category: "design"
     },
     {
@@ -53,7 +44,7 @@ export default function GalleryPage() {
       title: "ARO E-Commerce",
       description: "E-commerce website built with PHP and MySQLi",
       details: "PHP | MySQLi | HTML/CSS",
-      image: "/images/ARO E-Commerce.png",
+      image: null,
       category: "development"
     },
     {
@@ -61,7 +52,7 @@ export default function GalleryPage() {
       title: "My Portfolio Website",
       description: "Personal portfolio website built with Next.js",
       details: "Next.js | React | TypeScript",
-      image: "/images/My Portfolio.png",
+      image: null,
       category: "development"
     },
     {
@@ -69,16 +60,16 @@ export default function GalleryPage() {
       title: "Volleyball Event",
       description: "2nd Place finish in two separate sports events",
       details: "College of Engineering Sports Festival",
-      image: "/images/Volleyball COE Event.jpg",
+      image: null,
       category: "events"
     },
   ];
 
   const filteredItems = filter === "all" 
     ? galleryItems 
-    : galleryItems.filter((item: GalleryItem) => item.category === filter);
+    : galleryItems.filter(item => item.category === filter);
 
-  const openLightbox = (image: GalleryItem) => {
+  const openLightbox = (image: any) => {
     setSelectedImage(image);
   };
 
@@ -86,27 +77,15 @@ export default function GalleryPage() {
     setSelectedImage(null);
   };
 
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, title: string) => {
-    e.currentTarget.style.display = "none";
-    const parent = e.currentTarget.parentElement;
-    if (parent) {
-      parent.style.backgroundColor = "#1a1a2e";
-      parent.style.display = "flex";
-      parent.style.alignItems = "center";
-      parent.style.justifyContent = "center";
-      parent.style.flexDirection = "column";
-      const span = document.createElement("span");
-      span.style.fontSize = "3rem";
-      span.style.color = "white";
-      span.innerHTML = "🖼️";
-      const p = document.createElement("p");
-      p.style.color = "white";
-      p.style.marginTop = "0.5rem";
-      p.innerHTML = title;
-      parent.innerHTML = "";
-      parent.appendChild(span);
-      parent.appendChild(p);
-    }
+  const getPlaceholderIcon = (title: string) => {
+    if (title.includes("Fun Run")) return "🏃";
+    if (title.includes("Tree")) return "🌳";
+    if (title.includes("Decal")) return "🎨";
+    if (title.includes("Sticker")) return "📦";
+    if (title.includes("E-Commerce")) return "🛒";
+    if (title.includes("Portfolio")) return "💼";
+    if (title.includes("Volleyball")) return "🏐";
+    return "🖼️";
   };
 
   return (
@@ -126,12 +105,10 @@ export default function GalleryPage() {
           {filteredItems.map((item) => (
             <div key={item.id} style={galleryCard} onClick={() => openLightbox(item)}>
               <div style={imageWrapper}>
-                <img 
-                  src={item.image} 
-                  alt={item.title}
-                  style={galleryImage}
-                  onError={(e) => handleImageError(e, item.title)}
-                />
+                <div style={placeholderImage}>
+                  <span style={placeholderIcon}>{getPlaceholderIcon(item.title)}</span>
+                  <p style={placeholderText}>{item.title}</p>
+                </div>
               </div>
               <div style={cardText}>
                 <h3 style={cardTitle}>{item.title}</h3>
@@ -147,7 +124,9 @@ export default function GalleryPage() {
         <div style={lightboxOverlay} onClick={closeLightbox}>
           <div style={lightboxContent} onClick={(e) => e.stopPropagation()}>
             <button style={closeButton} onClick={closeLightbox}>✕</button>
-            <img src={selectedImage.image} alt={selectedImage.title} style={lightboxImage} />
+            <div style={lightboxPlaceholder}>
+              <span style={lightboxIcon}>{getPlaceholderIcon(selectedImage.title)}</span>
+            </div>
             <h3 style={lightboxTitle}>{selectedImage.title}</h3>
             <p style={lightboxDesc}>{selectedImage.description}</p>
             <p style={lightboxDetails}>{selectedImage.details}</p>
@@ -178,7 +157,7 @@ const pageTitle = {
 };
 
 const pageSubtitle = {
-  textAlign: "center",
+  textAlign: "center" as const,
   color: "#666",
   marginBottom: "2rem",
   fontSize: "1.1rem",
@@ -189,7 +168,7 @@ const filterContainer = {
   justifyContent: "center",
   gap: "1rem",
   marginBottom: "2rem",
-  flexWrap: "wrap",
+  flexWrap: "wrap" as const,
 };
 
 const filterButtonStyle = {
@@ -222,17 +201,30 @@ const imageWrapper = {
   width: "100%",
   height: "220px",
   overflow: "hidden",
-  backgroundColor: "#f0f0f0",
+  backgroundColor: "#1a1a2e",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 };
 
-const galleryImage = {
+const placeholderImage = {
+  display: "flex",
+  flexDirection: "column" as const,
+  alignItems: "center",
+  justifyContent: "center",
   width: "100%",
   height: "100%",
-  objectFit: "cover",
-  transition: "transform 0.3s ease",
+};
+
+const placeholderIcon = {
+  fontSize: "3rem",
+  color: "#4fc3f7",
+};
+
+const placeholderText = {
+  color: "white",
+  marginTop: "0.5rem",
+  fontSize: "0.9rem",
 };
 
 const cardText = {
@@ -262,7 +254,7 @@ const categoryBadge = {
 };
 
 const lightboxOverlay = {
-  position: "fixed",
+  position: "fixed" as const,
   top: 0,
   left: 0,
   right: 0,
@@ -280,12 +272,12 @@ const lightboxContent = {
   backgroundColor: "white",
   borderRadius: "12px",
   padding: "1rem",
-  textAlign: "center",
-  position: "relative",
+  textAlign: "center" as const,
+  position: "relative" as const,
 };
 
 const closeButton = {
-  position: "absolute",
+  position: "absolute" as const,
   top: "10px",
   right: "20px",
   fontSize: "2rem",
@@ -295,10 +287,19 @@ const closeButton = {
   color: "#333",
 };
 
-const lightboxImage = {
-  maxWidth: "100%",
-  maxHeight: "60vh",
-  objectFit: "contain",
+const lightboxPlaceholder = {
+  width: "100%",
+  height: "300px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "#1a1a2e",
+  borderRadius: "8px",
+};
+
+const lightboxIcon = {
+  fontSize: "5rem",
+  color: "#4fc3f7",
 };
 
 const lightboxTitle = {
