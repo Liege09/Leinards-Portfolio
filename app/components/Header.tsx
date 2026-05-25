@@ -43,7 +43,7 @@ export default function Header() {
 
 const headerStyle = {
   backgroundColor: "#1a1a2e",
-  position: "fixed",
+  position: "fixed" as const,
   top: 0,
   left: 0,
   right: 0,
@@ -53,8 +53,8 @@ const headerStyle = {
 
 const navContainer = {
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+  justifyContent: "space-between" as const,
+  alignItems: "center" as const,
   padding: "1rem 2rem",
   maxWidth: "1200px",
   margin: "0 auto",
@@ -62,7 +62,7 @@ const navContainer = {
 
 const logoStyle = {
   fontSize: "1.5rem",
-  fontWeight: "bold",
+  fontWeight: "bold" as const,
 };
 
 const logoLink = {
@@ -76,7 +76,7 @@ const navListStyle = {
   gap: "1.5rem",
   margin: 0,
   padding: 0,
-  flexWrap: "wrap",
+  flexWrap: "wrap" as const,
 };
 
 const navItemStyle = {
