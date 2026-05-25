@@ -12,7 +12,7 @@ export default function ProjectsPage() {
       description: "This personal portfolio website built with Next.js to showcase my skills and projects.",
       tech: ["Next.js", "React", "TypeScript"],
       category: "web",
-      image: null
+      image: "/images/My Portfolio.png"
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ export default function ProjectsPage() {
       description: "An e-commerce website built with PHP and MySQLi for online shopping functionality.",
       tech: ["PHP", "MySQLi", "HTML/CSS"],
       category: "web",
-      image: null
+      image: "/images/ARO E-Commerce.png"
     },
     {
       id: 3,
@@ -28,20 +28,13 @@ export default function ProjectsPage() {
       description: "Custom sticker and decal design using Silhouette Studio and SVG editing.",
       tech: ["Silhouette Studio", "SVG", "Design"],
       category: "design",
-      image: null
+      image: "/images/Custom Decal Design.png"
     },
   ];
 
   const filteredProjects = filter === "all" 
     ? projects 
     : projects.filter(p => p.category === filter);
-
-  const getProjectIcon = (title: string) => {
-    if (title.includes("Portfolio")) return "💼";
-    if (title.includes("E-Commerce")) return "🛒";
-    if (title.includes("Decal")) return "🎨";
-    return "📁";
-  };
 
   return (
     <div className="container" style={containerStyle}>
@@ -57,12 +50,30 @@ export default function ProjectsPage() {
       <div className="grid-2">
         {filteredProjects.map((project) => (
           <div key={project.id} className="card" style={projectCardStyle}>
-            <div style={imageWrapperStyle}>
-              <div style={projectPlaceholder}>
-                <span style={projectIcon}>{getProjectIcon(project.title)}</span>
-                <p style={projectPlaceholderText}>{project.title}</p>
+            {project.image && (
+              <div style={imageWrapperStyle}>
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  style={projectImageStyle}
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    const parent = e.currentTarget.parentElement;
+                    if (parent) {
+                      parent.style.backgroundColor = "#1a1a2e";
+                      parent.style.display = "flex";
+                      parent.style.alignItems = "center";
+                      parent.style.justifyContent = "center";
+                      const span = document.createElement("span");
+                      span.style.fontSize = "3rem";
+                      span.style.color = "#4fc3f7";
+                      span.innerHTML = "📁";
+                      parent.appendChild(span);
+                    }
+                  }}
+                />
               </div>
-            </div>
+            )}
             <h2>{project.title}</h2>
             <p>{project.description}</p>
             <div style={techStackStyle}>
@@ -120,7 +131,7 @@ const imageWrapperStyle = {
   width: "100%",
   height: "180px",
   overflow: "hidden",
-  backgroundColor: "#1a1a2e",
+  backgroundColor: "#f0f0f0",
   borderRadius: "8px",
   marginBottom: "1rem",
   display: "flex",
@@ -128,24 +139,11 @@ const imageWrapperStyle = {
   justifyContent: "center",
 };
 
-const projectPlaceholder = {
-  display: "flex",
-  flexDirection: "column" as const,
-  alignItems: "center",
-  justifyContent: "center",
+const projectImageStyle = {
   width: "100%",
   height: "100%",
-};
-
-const projectIcon = {
-  fontSize: "3rem",
-  color: "#4fc3f7",
-};
-
-const projectPlaceholderText = {
-  color: "white",
-  marginTop: "0.5rem",
-  fontSize: "0.8rem",
+  objectFit: "cover" as const,
+  borderRadius: "8px",
 };
 
 const techStackStyle = {

@@ -12,7 +12,7 @@ export default function GalleryPage() {
       title: "Color Fun Run 2024",
       description: "Takbo para sa Atelang Ka-Piyu - May 5, 2024",
       details: "Organized by: Piyu Sports Club | LSPU Office of Sports and Cultural Affairs",
-      image: null,
+      image: "/images/2024 Color Fun Run.jpg",
       category: "events"
     },
     {
@@ -20,7 +20,7 @@ export default function GalleryPage() {
       title: "Tree Planting Activity",
       description: "Environmental initiative with HPKL nonprofit organization",
       details: "Secretary, Nonprofit Tree Planting Organization",
-      image: null,
+      image: "/images/HPKL Tree Planting.jpg",
       category: "events"
     },
     {
@@ -28,7 +28,7 @@ export default function GalleryPage() {
       title: "Custom Decal Design",
       description: "Sample of decal and sticker design work",
       details: "Silhouette Studio | SVG Editing",
-      image: null,
+      image: "/images/Custom Decal Design.png",
       category: "design"
     },
     {
@@ -36,7 +36,7 @@ export default function GalleryPage() {
       title: "Sticker Production",
       description: "Vinyl cutting, weeding, and sticker production process",
       details: "Full production workflow",
-      image: null,
+      image: "/images/Sticky Production.jpg",
       category: "design"
     },
     {
@@ -44,7 +44,7 @@ export default function GalleryPage() {
       title: "ARO E-Commerce",
       description: "E-commerce website built with PHP and MySQLi",
       details: "PHP | MySQLi | HTML/CSS",
-      image: null,
+      image: "/images/ARO E-Commerce.png",
       category: "development"
     },
     {
@@ -52,7 +52,7 @@ export default function GalleryPage() {
       title: "My Portfolio Website",
       description: "Personal portfolio website built with Next.js",
       details: "Next.js | React | TypeScript",
-      image: null,
+      image: "/images/My Portfolio.png",
       category: "development"
     },
     {
@@ -60,7 +60,7 @@ export default function GalleryPage() {
       title: "Volleyball Event",
       description: "2nd Place finish in two separate sports events",
       details: "College of Engineering Sports Festival",
-      image: null,
+      image: "/images/Volleyball COE Event.jpg",
       category: "events"
     },
   ];
@@ -75,17 +75,6 @@ export default function GalleryPage() {
 
   const closeLightbox = () => {
     setSelectedImage(null);
-  };
-
-  const getPlaceholderIcon = (title: string) => {
-    if (title.includes("Fun Run")) return "🏃";
-    if (title.includes("Tree")) return "🌳";
-    if (title.includes("Decal")) return "🎨";
-    if (title.includes("Sticker")) return "📦";
-    if (title.includes("E-Commerce")) return "🛒";
-    if (title.includes("Portfolio")) return "💼";
-    if (title.includes("Volleyball")) return "🏐";
-    return "🖼️";
   };
 
   return (
@@ -105,10 +94,26 @@ export default function GalleryPage() {
           {filteredItems.map((item) => (
             <div key={item.id} style={galleryCard} onClick={() => openLightbox(item)}>
               <div style={imageWrapper}>
-                <div style={placeholderImage}>
-                  <span style={placeholderIcon}>{getPlaceholderIcon(item.title)}</span>
-                  <p style={placeholderText}>{item.title}</p>
-                </div>
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  style={galleryImage}
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    const parent = e.currentTarget.parentElement;
+                    if (parent) {
+                      parent.style.backgroundColor = "#1a1a2e";
+                      parent.style.display = "flex";
+                      parent.style.alignItems = "center";
+                      parent.style.justifyContent = "center";
+                      const span = document.createElement("span");
+                      span.style.fontSize = "3rem";
+                      span.style.color = "#4fc3f7";
+                      span.innerHTML = "🖼️";
+                      parent.appendChild(span);
+                    }
+                  }}
+                />
               </div>
               <div style={cardText}>
                 <h3 style={cardTitle}>{item.title}</h3>
@@ -124,9 +129,7 @@ export default function GalleryPage() {
         <div style={lightboxOverlay} onClick={closeLightbox}>
           <div style={lightboxContent} onClick={(e) => e.stopPropagation()}>
             <button style={closeButton} onClick={closeLightbox}>✕</button>
-            <div style={lightboxPlaceholder}>
-              <span style={lightboxIcon}>{getPlaceholderIcon(selectedImage.title)}</span>
-            </div>
+            <img src={selectedImage.image} alt={selectedImage.title} style={lightboxImage} />
             <h3 style={lightboxTitle}>{selectedImage.title}</h3>
             <p style={lightboxDesc}>{selectedImage.description}</p>
             <p style={lightboxDetails}>{selectedImage.details}</p>
@@ -201,30 +204,17 @@ const imageWrapper = {
   width: "100%",
   height: "220px",
   overflow: "hidden",
-  backgroundColor: "#1a1a2e",
+  backgroundColor: "#f0f0f0",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 };
 
-const placeholderImage = {
-  display: "flex",
-  flexDirection: "column" as const,
-  alignItems: "center",
-  justifyContent: "center",
+const galleryImage = {
   width: "100%",
   height: "100%",
-};
-
-const placeholderIcon = {
-  fontSize: "3rem",
-  color: "#4fc3f7",
-};
-
-const placeholderText = {
-  color: "white",
-  marginTop: "0.5rem",
-  fontSize: "0.9rem",
+  objectFit: "cover" as const,
+  transition: "transform 0.3s ease",
 };
 
 const cardText = {
@@ -287,19 +277,10 @@ const closeButton = {
   color: "#333",
 };
 
-const lightboxPlaceholder = {
-  width: "100%",
-  height: "300px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "#1a1a2e",
-  borderRadius: "8px",
-};
-
-const lightboxIcon = {
-  fontSize: "5rem",
-  color: "#4fc3f7",
+const lightboxImage = {
+  maxWidth: "100%",
+  maxHeight: "60vh",
+  objectFit: "contain" as const,
 };
 
 const lightboxTitle = {

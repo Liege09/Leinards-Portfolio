@@ -1,14 +1,29 @@
 "use client";
 
+import Image from "next/image";
+
 function AboutPage() {
   return (
     <div style={containerStyle}>
       <h1>About Me Page</h1>
       <div style={contentStyle}>
         <div style={profileContainer}>
-          <div style={placeholderImageStyle}>
-            <span style={placeholderIcon}>👤</span>
-          </div>
+          <img 
+            src="/images/My Picture.png" 
+            alt="Leinard Aro"
+            style={profileImageStyle}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                const span = document.createElement("span");
+                span.style.fontSize = "4rem";
+                span.style.color = "#4fc3f7";
+                span.innerHTML = "👤";
+                parent.appendChild(span);
+              }
+            }}
+          />
           <div style={bioStyle}>
             <h2>Who Am I?</h2>
             <p>I'm Leinard Aro, an Information Technology student from Laguna, Philippines.</p>
@@ -45,19 +60,12 @@ const profileContainer = {
   alignItems: "flex-start" as const,
 };
 
-const placeholderImageStyle = {
+const profileImageStyle = {
   width: "200px",
   height: "200px",
   borderRadius: "50%",
+  objectFit: "cover" as const,
   backgroundColor: "#1a1a2e",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
-const placeholderIcon = {
-  fontSize: "4rem",
-  color: "#4fc3f7",
 };
 
 const bioStyle = {
